@@ -1,0 +1,8 @@
+services:
+  - type: web
+    name: drivewise-spring-api
+    runtime: docker
+    plan: free
+    region: singapore
+    rootDir: spring-api
+    healthCheckPath: /
