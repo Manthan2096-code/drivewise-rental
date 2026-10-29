@@ -1,0 +1,87 @@
+.app-shell { min-height: 100vh; }
+.topbar { height: 76px; padding: 0 max(24px, calc((100% - 1120px) / 2)); display: flex; align-items: center; gap: 28px; background: #fff; border-bottom: 1px solid #e5e8df; }
+.brand { display: inline-flex; align-items: center; color: #19271f; text-decoration: none; font: 800 22px Manrope, sans-serif; letter-spacing: -1.2px; }
+.brand-mark { display: grid; place-items: center; width: 34px; height: 34px; margin-right: 9px; border-radius: 11px; background: #19271f; color: #d8f36a; font-size: 19px; }
+.brand-dot { color: #8da421; }
+.account { display: flex; align-items: center; gap: 11px; margin-left: auto; }
+.account-copy { display: grid; gap: 2px; text-align: right; font-size: 12px; }
+.account-copy span { color: #6c756e; }
+.avatar { display: grid; place-items: center; width: 36px; height: 36px; border-radius: 50%; background: #edf2dd; color: #4b5c17; font-size: 12px; font-weight: 700; }
+.cart-summary { display: flex; align-items: center; gap: 8px; padding: 10px 13px; border: 1px solid #e5e8df; border-radius: 8px; font-size: 13px; white-space: nowrap; }
+.cart-icon { font-size: 19px; }
+.cart-summary strong { color: #6a7c25; }
+.cart-total { padding-left: 9px; border-left: 1px solid #e5e8df; color: #687368; }
+.catalog-main { width: min(1120px, calc(100% - 40px)); margin: 0 auto; padding: 52px 0 44px; }
+.catalog-heading { display: flex; align-items: end; justify-content: space-between; gap: 24px; margin-bottom: 29px; }
+.eyebrow { margin: 0 0 7px; color: #7b8d2e; font-size: 10px; font-weight: 700; letter-spacing: 1.7px; }
+h1, h2, h3, p { margin-top: 0; }
+.catalog-heading h1 { margin-bottom: 0; font: 800 clamp(28px, 4vw, 42px)/1.1 Manrope, sans-serif; letter-spacing: -1.7px; }
+.catalog-heading h1 em { color: #7b8d2e; font-family: Georgia, serif; font-weight: 400; }
+.catalog-heading > p { max-width: 280px; margin-bottom: 4px; color: #6c756e; font-size: 14px; line-height: 1.6; }
+.filter-panel { display: flex; align-items: center; gap: 12px; padding: 14px; background: #fff; border: 1px solid #e5e8df; border-radius: 12px; }
+.search-field, .select-field { height: 42px; display: flex; align-items: center; border: 1px solid #e5e8df; border-radius: 7px; background: #fff; }
+.search-field { flex: 1; gap: 8px; padding: 0 11px; color: #818b83; font-size: 22px; }
+.search-field input { width: 100%; border: 0; outline: 0; color: #19271f; font-size: 13px; }
+.search-field input:focus-visible { outline: none; }
+.select-field select { min-width: 175px; height: 100%; padding: 0 32px 0 12px; border: 0; background: transparent; color: #19271f; font-size: 13px; }
+.stock-filter { display: flex; align-items: center; gap: 8px; padding: 0 6px; color: #58635b; font-size: 13px; white-space: nowrap; }
+.stock-filter input { accent-color: #596d1c; }
+.results-heading { display: flex; align-items: center; justify-content: space-between; margin: 30px 0 14px; }
+.results-heading h2 { margin: 0; font: 700 17px Manrope, sans-serif; }
+.results-heading span { color: #6c756e; font-size: 12px; }
+.vehicle-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; }
+.vehicle-card { display: flex; min-width: 0; flex-direction: column; overflow: hidden; border: 1px solid #e5e8df; border-radius: 12px; background: #fff; transition: transform .18s ease, box-shadow .18s ease; }
+.vehicle-card:hover { transform: translateY(-3px); box-shadow: 0 12px 28px #19271f12; }
+.vehicle-image-wrap { position: relative; height: 190px; background: #e9ece5; }
+.vehicle-image { width: 100%; height: 100%; display: block; object-fit: cover; }
+.category-badge, .stock-badge { position: absolute; top: 12px; padding: 6px 9px; border-radius: 20px; background: #fffffff0; color: #34422d; font-size: 10px; font-weight: 700; }
+.category-badge { left: 12px; }
+.stock-badge { right: 12px; background: #f4e9e3; color: #91472e; }
+.vehicle-details { display: flex; flex: 1; flex-direction: column; padding: 15px 16px 16px; }
+.rating { margin-bottom: 8px; color: #687a22; font-size: 12px; font-weight: 700; }
+.rating-label { margin-left: 3px; color: #8a928a; font-weight: 400; }
+.vehicle-details h3 { margin-bottom: 4px; font: 700 17px Manrope, sans-serif; }
+.vehicle-meta { margin-bottom: 18px; color: #6c756e; font-size: 12px; }
+.vehicle-meta span { padding: 0 4px; color: #a1a89f; }
+.card-footer { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-top: auto; }
+.price { margin: 0; font-size: 17px; font-weight: 800; }
+.price span { color: #7b847b; font-size: 11px; font-weight: 400; }
+.add-button { min-height: 36px; padding: 0 12px; border: 0; border-radius: 6px; background: #19271f; color: white; font-size: 11px; font-weight: 700; transition: background .15s ease; }
+.add-button:hover:not(:disabled) { background: #354b38; }
+.add-button span { margin-left: 4px; color: #d8f36a; font-size: 15px; }
+.add-button { width: 100%; margin-top: 10px; }
+.book-button { min-height: 36px; padding: 0 13px; border: 0; border-radius: 6px; background: #d8f36a; color: #19271f; font-size: 11px; font-weight: 700; }
+.book-button:hover { background: #c9e654; }
+.unavailable-label { color: #91472e; font-size: 11px; font-weight: 600; }
+.add-button:disabled { cursor: not-allowed; }
+.add-button.disabled { background: #d9ddd5; color: #6c756e; }
+.empty-state { padding: 38px 20px; border: 1px dashed #cdd3c7; border-radius: 12px; color: #6c756e; text-align: center; }
+.demo-note { margin: 27px 0 0; color: #8a928a; font-size: 11px; text-align: center; }
+.booking-backdrop { position: fixed; z-index: 5; inset: 0; display: grid; place-items: center; overflow-y: auto; padding: 20px; background: #111a16a8; }
+.booking-dialog { position: relative; width: min(620px, 100%); max-height: calc(100vh - 40px); overflow-y: auto; padding: 30px; border-radius: 14px; background: #fff; box-shadow: 0 20px 70px #0003; }
+.close-dialog { position: absolute; top: 14px; right: 16px; width: 34px; height: 34px; border: 0; border-radius: 50%; background: #f2f4ef; color: #19271f; font-size: 23px; }
+.booking-dialog h2 { margin: 0 0 5px; font: 700 24px Manrope, sans-serif; }
+.booking-price { margin-bottom: 22px; color: #6c756e; font-size: 13px; }
+.booking-form { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
+.booking-form label { display: grid; gap: 6px; color: #465249; font-size: 12px; font-weight: 600; }
+.booking-form input, .booking-form textarea { width: 100%; min-height: 42px; padding: 10px 11px; border: 1px solid #dce2d8; border-radius: 6px; background: #fbfcf9; color: #19271f; }
+.booking-form textarea { resize: vertical; }
+.booking-form .notes-field, .booking-form .booking-error, .booking-form .submit-booking { grid-column: 1 / -1; }
+.notes-field span { color: #889087; font-weight: 400; }
+.booking-error { margin: 0; color: #a33d2a; font-size: 13px; }
+.field-error { color: #a33d2a; font-size: 11px; font-weight: 500; }
+.booking-form [aria-invalid="true"] { border-color: #a33d2a; }
+.submit-booking { min-height: 46px; border: 0; border-radius: 6px; background: #19271f; color: #fff; font-weight: 700; }
+.submit-booking:disabled { cursor: wait; opacity: .7; }
+.booking-history { margin-top: 30px; }
+.booking-confirmation { margin-bottom: 14px; padding: 18px; border: 1px solid #dce2d8; border-radius: 10px; background: #fff; }
+.booking-confirmation h3 { margin: 0 0 7px; }
+.booking-confirmation p:not(.eyebrow) { margin: 4px 0 0; color: #6c756e; font-size: 13px; }
+.booking-table-wrap { overflow-x: auto; border: 1px solid #e5e8df; border-radius: 10px; background: #fff; }
+.booking-table { width: 100%; border-collapse: collapse; text-align: left; font-size: 13px; }
+.booking-table th, .booking-table td { padding: 12px 15px; border-bottom: 1px solid #edf0e9; white-space: nowrap; }
+.booking-table th { color: #596d1c; font-size: 11px; }
+.booking-table tbody tr:last-child td { border-bottom: 0; }
+@media (max-width: 760px) { .topbar { gap: 14px; padding-inline: 20px; } .account-copy { display: none; } .catalog-main { padding-top: 37px; } .vehicle-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; } .vehicle-image-wrap { height: 165px; } }
+@media (max-width: 520px) { .topbar { height: 66px; padding-inline: 15px; gap: 10px; } .brand { font-size: 19px; } .brand-mark { width: 30px; height: 30px; margin-right: 6px; font-size: 16px; } .cart-summary { padding: 8px; gap: 5px; font-size: 11px; } .cart-total { padding-left: 6px; } .catalog-main { width: calc(100% - 30px); padding-top: 30px; } .catalog-heading { display: block; } .catalog-heading > p { margin-top: 11px; } .filter-panel { align-items: stretch; flex-wrap: wrap; gap: 9px; padding: 11px; } .search-field { flex-basis: 100%; } .select-field { flex: 1; } .select-field select { width: 100%; min-width: 0; } .stock-filter { min-height: 40px; } .vehicle-grid { grid-template-columns: 1fr; gap: 13px; } .vehicle-image-wrap { height: 205px; } .vehicle-details h3 { font-size: 18px; } .booking-dialog { padding: 23px 18px; } .booking-form { grid-template-columns: 1fr; } .booking-form .notes-field, .booking-form .booking-error, .booking-form .submit-booking { grid-column: auto; } }
+@media (prefers-reduced-motion: reduce) { *, *::before, *::after { scroll-behavior: auto !important; transition-duration: .01ms !important; } }

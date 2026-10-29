@@ -1,0 +1,43 @@
+{
+  "info": {
+    "name": "DriveWise Experiment 8 - JWT Authentication",
+    "description": "Register a user, log in to receive a JWT, and access the protected dashboard. Run in order while npm start is running.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    { "key": "baseUrl", "value": "http://localhost:5000/auth" },
+    { "key": "token", "value": "" }
+  ],
+  "item": [
+    {
+      "name": "1 POST - Register",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": { "mode": "raw", "raw": "{\n  \"name\": \"DriveWise Demo\",\n  \"email\": \"demo@example.com\",\n  \"password\": \"samplePass123\"\n}", "options": { "raw": { "language": "json" } } },
+        "url": "{{baseUrl}}/register"
+      },
+      "event": [{ "listen": "test", "script": { "type": "text/javascript", "exec": ["pm.test('Account registered', () => pm.response.to.have.status(201));"] } }]
+    },
+    {
+      "name": "2 POST - Login and Get JWT",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": { "mode": "raw", "raw": "{\n  \"email\": \"demo@example.com\",\n  \"password\": \"samplePass123\"\n}", "options": { "raw": { "language": "json" } } },
+        "url": "{{baseUrl}}/login"
+      },
+      "event": [{ "listen": "test", "script": { "type": "text/javascript", "exec": ["pm.test('Login returns a token', () => pm.response.to.have.status(200));", "pm.collectionVariables.set('token', pm.response.json().token);"] } }]
+    },
+    {
+      "name": "3 GET - Protected Dashboard",
+      "request": {
+        "auth": { "type": "bearer", "bearer": [{ "key": "token", "value": "{{token}}", "type": "string" }] },
+        "method": "GET",
+        "header": [],
+        "url": "{{baseUrl}}/dashboard"
+      },
+      "event": [{ "listen": "test", "script": { "type": "text/javascript", "exec": ["pm.test('Valid token opens dashboard', () => pm.response.to.have.status(200));"] } }]
+    }
+  ]
+}

@@ -1,0 +1,57 @@
+{
+  "info": {
+    "name": "DriveWise REST API - Experiment 2",
+    "description": "CRUD practice for DriveWise vehicles. Run requests in order to create, read, replace, partially update, and delete a temporary vehicle record.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "1 GET - All Vehicles",
+      "request": { "method": "GET", "header": [], "url": "{{baseUrl}}/api/vehicles" }
+    },
+    {
+      "name": "2 GET - Single Vehicle",
+      "request": { "method": "GET", "header": [], "url": "{{baseUrl}}/api/vehicles/{{vehicleId}}" }
+    },
+    {
+      "name": "3 GET - Filter by Category",
+      "request": { "method": "GET", "header": [], "url": "{{baseUrl}}/api/vehicles?category=Scooter" }
+    },
+    {
+      "name": "4 POST - Create Vehicle",
+      "event": [{ "listen": "test", "script": { "type": "text/javascript", "exec": ["if (pm.response.code === 201) pm.collectionVariables.set('vehicleId', pm.response.json().id);"] } }],
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": { "mode": "raw", "raw": "{\n  \"model\": \"Experiment Scooter\",\n  \"category\": \"Scooter\",\n  \"transmission\": \"Automatic\",\n  \"seats\": 2,\n  \"pricePerDay\": 850\n}", "options": { "raw": { "language": "json" } } },
+        "url": "{{baseUrl}}/api/vehicles"
+      }
+    },
+    {
+      "name": "5 PUT - Replace Vehicle",
+      "request": {
+        "method": "PUT",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": { "mode": "raw", "raw": "{\n  \"model\": \"Experiment Scooter Updated\",\n  \"category\": \"Scooter\",\n  \"transmission\": \"Automatic\",\n  \"seats\": 2,\n  \"pricePerDay\": 900\n}", "options": { "raw": { "language": "json" } } },
+        "url": "{{baseUrl}}/api/vehicles/{{vehicleId}}"
+      }
+    },
+    {
+      "name": "6 PATCH - Update Price",
+      "request": {
+        "method": "PATCH",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": { "mode": "raw", "raw": "{\n  \"pricePerDay\": 950\n}", "options": { "raw": { "language": "json" } } },
+        "url": "{{baseUrl}}/api/vehicles/{{vehicleId}}"
+      }
+    },
+    {
+      "name": "7 DELETE - Delete Vehicle",
+      "request": { "method": "DELETE", "header": [], "url": "{{baseUrl}}/api/vehicles/{{vehicleId}}" }
+    }
+  ],
+  "variable": [
+    { "key": "baseUrl", "value": "http://localhost:3000" },
+    { "key": "vehicleId", "value": "corolla" }
+  ]
+}

@@ -1,0 +1,20 @@
+$kind: http-request
+url: "{{baseUrl}}/api/vehicles"
+method: POST
+headers:
+  Content-Type: application/json
+body:
+  type: json
+  content: |-
+    {
+      "model": "Experiment Scooter",
+      "category": "Scooter",
+      "transmission": "Automatic",
+      "seats": 2,
+      "pricePerDay": 850
+    }
+scripts:
+  - type: afterResponse
+    code: if (pm.response.code === 201) pm.collectionVariables.set('vehicleId', pm.response.json().id);
+    language: text/javascript
+order: 4000

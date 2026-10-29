@@ -1,0 +1,13 @@
+node_modules/
+dist/
+spring-api/target/
+__pycache__/
+*.py[cod]
+db.json
+output/
+tmp/
+.codex-pptx-build/
+.postman/
+.env
+.env.*
+!.env.example

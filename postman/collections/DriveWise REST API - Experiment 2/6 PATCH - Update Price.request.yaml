@@ -1,0 +1,12 @@
+$kind: http-request
+url: "{{baseUrl}}/api/vehicles/{{vehicleId}}"
+method: PATCH
+headers:
+  Content-Type: application/json
+body:
+  type: json
+  content: |-
+    {
+      "pricePerDay": 950
+    }
+order: 6000

@@ -1,0 +1,818 @@
+{
+  "info": {
+    "name": "DriveWise REST API - Six Vehicle CRUD",
+    "description": "Runs the CRUD sequence for each of the six vehicles and three categories shown on the DriveWise website. Each created test record is removed at the end of its sequence.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "1 GET - All Vehicles",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"List vehicles\", function () { pm.response.to.have.status(200); pm.expect(pm.response.json()).to.be.an(\"array\"); });"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": "{{baseUrl}}/api/vehicles"
+      }
+    },
+    {
+      "name": "2 GET - Single Vehicle",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"Get Toyota Corolla\", function () { pm.response.to.have.status(200); pm.expect(pm.response.json().model).to.eql(\"Toyota Corolla\"); });"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": "{{baseUrl}}/api/vehicles/corolla"
+      }
+    },
+    {
+      "name": "GET - Filter Car",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"Filter by Car\", function () { pm.response.to.have.status(200); pm.expect(pm.response.json().length).to.be.above(0); pm.response.json().forEach(function (v) { pm.expect(v.category).to.eql(\"Car\"); }); });"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": "{{baseUrl}}/api/vehicles?category=Car"
+      }
+    },
+    {
+      "name": "GET - Filter Motorcycle",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"Filter by Motorcycle\", function () { pm.response.to.have.status(200); pm.expect(pm.response.json().length).to.be.above(0); pm.response.json().forEach(function (v) { pm.expect(v.category).to.eql(\"Motorcycle\"); }); });"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": "{{baseUrl}}/api/vehicles?category=Motorcycle"
+      }
+    },
+    {
+      "name": "GET - Filter Scooter",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"Filter by Scooter\", function () { pm.response.to.have.status(200); pm.expect(pm.response.json().length).to.be.above(0); pm.response.json().forEach(function (v) { pm.expect(v.category).to.eql(\"Scooter\"); }); });"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": "{{baseUrl}}/api/vehicles?category=Scooter"
+      }
+    },
+    {
+      "name": "POST - Create Toyota Corolla",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"Create Toyota Corolla\", function () { pm.response.to.have.status(201); var v = pm.response.json(); pm.expect(v.model).to.eql(\"Toyota Corolla\"); pm.expect(v.category).to.eql(\"Car\"); pm.collectionVariables.set(\"vehicleId\", v.id); });"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"model\": \"Toyota Corolla\",\n  \"category\": \"Car\",\n  \"transmission\": \"Automatic\",\n  \"seats\": 5,\n  \"pricePerDay\": 2499\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": "{{baseUrl}}/api/vehicles"
+      }
+    },
+    {
+      "name": "PUT - Replace Toyota Corolla",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"Replace Toyota Corolla\", function () { pm.response.to.have.status(200); pm.expect(pm.response.json().model).to.eql(\"Toyota Corolla\"); pm.expect(pm.response.json().category).to.eql(\"Car\"); });"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "PUT",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"model\": \"Toyota Corolla\",\n  \"category\": \"Car\",\n  \"transmission\": \"Automatic\",\n  \"seats\": 5,\n  \"pricePerDay\": 2599\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": "{{baseUrl}}/api/vehicles/{{vehicleId}}"
+      }
+    },
+    {
+      "name": "PATCH - Update price for Toyota Corolla",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"Update price for Toyota Corolla\", function () { pm.response.to.have.status(200); pm.expect(pm.response.json().pricePerDay).to.eql(2699); });"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "PATCH",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"pricePerDay\": 2699\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": "{{baseUrl}}/api/vehicles/{{vehicleId}}"
+      }
+    },
+    {
+      "name": "DELETE - Remove test Toyota Corolla",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"Remove temporary Toyota Corolla\", function () { pm.response.to.have.status(204); });"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "DELETE",
+        "header": [],
+        "url": "{{baseUrl}}/api/vehicles/{{vehicleId}}"
+      }
+    },
+    {
+      "name": "POST - Create Hyundai Creta",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"Create Hyundai Creta\", function () { pm.response.to.have.status(201); var v = pm.response.json(); pm.expect(v.model).to.eql(\"Hyundai Creta\"); pm.expect(v.category).to.eql(\"Car\"); pm.collectionVariables.set(\"vehicleId\", v.id); });"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"model\": \"Hyundai Creta\",\n  \"category\": \"Car\",\n  \"transmission\": \"Automatic\",\n  \"seats\": 5,\n  \"pricePerDay\": 3899\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": "{{baseUrl}}/api/vehicles"
+      }
+    },
+    {
+      "name": "PUT - Replace Hyundai Creta",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"Replace Hyundai Creta\", function () { pm.response.to.have.status(200); pm.expect(pm.response.json().model).to.eql(\"Hyundai Creta\"); pm.expect(pm.response.json().category).to.eql(\"Car\"); });"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "PUT",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"model\": \"Hyundai Creta\",\n  \"category\": \"Car\",\n  \"transmission\": \"Automatic\",\n  \"seats\": 5,\n  \"pricePerDay\": 3999\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": "{{baseUrl}}/api/vehicles/{{vehicleId}}"
+      }
+    },
+    {
+      "name": "PATCH - Update price for Hyundai Creta",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"Update price for Hyundai Creta\", function () { pm.response.to.have.status(200); pm.expect(pm.response.json().pricePerDay).to.eql(4099); });"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "PATCH",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"pricePerDay\": 4099\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": "{{baseUrl}}/api/vehicles/{{vehicleId}}"
+      }
+    },
+    {
+      "name": "DELETE - Remove test Hyundai Creta",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"Remove temporary Hyundai Creta\", function () { pm.response.to.have.status(204); });"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "DELETE",
+        "header": [],
+        "url": "{{baseUrl}}/api/vehicles/{{vehicleId}}"
+      }
+    },
+    {
+      "name": "POST - Create Royal Enfield Classic",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"Create Royal Enfield Classic\", function () { pm.response.to.have.status(201); var v = pm.response.json(); pm.expect(v.model).to.eql(\"Royal Enfield Classic\"); pm.expect(v.category).to.eql(\"Motorcycle\"); pm.collectionVariables.set(\"vehicleId\", v.id); });"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"model\": \"Royal Enfield Classic\",\n  \"category\": \"Motorcycle\",\n  \"transmission\": \"Manual\",\n  \"seats\": 2,\n  \"pricePerDay\": 1799\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": "{{baseUrl}}/api/vehicles"
+      }
+    },
+    {
+      "name": "PUT - Replace Royal Enfield Classic",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"Replace Royal Enfield Classic\", function () { pm.response.to.have.status(200); pm.expect(pm.response.json().model).to.eql(\"Royal Enfield Classic\"); pm.expect(pm.response.json().category).to.eql(\"Motorcycle\"); });"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "PUT",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"model\": \"Royal Enfield Classic\",\n  \"category\": \"Motorcycle\",\n  \"transmission\": \"Manual\",\n  \"seats\": 2,\n  \"pricePerDay\": 1899\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": "{{baseUrl}}/api/vehicles/{{vehicleId}}"
+      }
+    },
+    {
+      "name": "PATCH - Update price for Royal Enfield Classic",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"Update price for Royal Enfield Classic\", function () { pm.response.to.have.status(200); pm.expect(pm.response.json().pricePerDay).to.eql(1999); });"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "PATCH",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"pricePerDay\": 1999\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": "{{baseUrl}}/api/vehicles/{{vehicleId}}"
+      }
+    },
+    {
+      "name": "DELETE - Remove test Royal Enfield Classic",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"Remove temporary Royal Enfield Classic\", function () { pm.response.to.have.status(204); });"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "DELETE",
+        "header": [],
+        "url": "{{baseUrl}}/api/vehicles/{{vehicleId}}"
+      }
+    },
+    {
+      "name": "POST - Create KTM Duke 390",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"Create KTM Duke 390\", function () { pm.response.to.have.status(201); var v = pm.response.json(); pm.expect(v.model).to.eql(\"KTM Duke 390\"); pm.expect(v.category).to.eql(\"Motorcycle\"); pm.collectionVariables.set(\"vehicleId\", v.id); });"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"model\": \"KTM Duke 390\",\n  \"category\": \"Motorcycle\",\n  \"transmission\": \"Manual\",\n  \"seats\": 2,\n  \"pricePerDay\": 2199\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": "{{baseUrl}}/api/vehicles"
+      }
+    },
+    {
+      "name": "PUT - Replace KTM Duke 390",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"Replace KTM Duke 390\", function () { pm.response.to.have.status(200); pm.expect(pm.response.json().model).to.eql(\"KTM Duke 390\"); pm.expect(pm.response.json().category).to.eql(\"Motorcycle\"); });"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "PUT",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"model\": \"KTM Duke 390\",\n  \"category\": \"Motorcycle\",\n  \"transmission\": \"Manual\",\n  \"seats\": 2,\n  \"pricePerDay\": 2299\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": "{{baseUrl}}/api/vehicles/{{vehicleId}}"
+      }
+    },
+    {
+      "name": "PATCH - Update price for KTM Duke 390",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"Update price for KTM Duke 390\", function () { pm.response.to.have.status(200); pm.expect(pm.response.json().pricePerDay).to.eql(2399); });"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "PATCH",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"pricePerDay\": 2399\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": "{{baseUrl}}/api/vehicles/{{vehicleId}}"
+      }
+    },
+    {
+      "name": "DELETE - Remove test KTM Duke 390",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"Remove temporary KTM Duke 390\", function () { pm.response.to.have.status(204); });"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "DELETE",
+        "header": [],
+        "url": "{{baseUrl}}/api/vehicles/{{vehicleId}}"
+      }
+    },
+    {
+      "name": "POST - Create Honda Activa 6G",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"Create Honda Activa 6G\", function () { pm.response.to.have.status(201); var v = pm.response.json(); pm.expect(v.model).to.eql(\"Honda Activa 6G\"); pm.expect(v.category).to.eql(\"Scooter\"); pm.collectionVariables.set(\"vehicleId\", v.id); });"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"model\": \"Honda Activa 6G\",\n  \"category\": \"Scooter\",\n  \"transmission\": \"Automatic\",\n  \"seats\": 2,\n  \"pricePerDay\": 699\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": "{{baseUrl}}/api/vehicles"
+      }
+    },
+    {
+      "name": "PUT - Replace Honda Activa 6G",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"Replace Honda Activa 6G\", function () { pm.response.to.have.status(200); pm.expect(pm.response.json().model).to.eql(\"Honda Activa 6G\"); pm.expect(pm.response.json().category).to.eql(\"Scooter\"); });"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "PUT",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"model\": \"Honda Activa 6G\",\n  \"category\": \"Scooter\",\n  \"transmission\": \"Automatic\",\n  \"seats\": 2,\n  \"pricePerDay\": 799\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": "{{baseUrl}}/api/vehicles/{{vehicleId}}"
+      }
+    },
+    {
+      "name": "PATCH - Update price for Honda Activa 6G",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"Update price for Honda Activa 6G\", function () { pm.response.to.have.status(200); pm.expect(pm.response.json().pricePerDay).to.eql(899); });"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "PATCH",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"pricePerDay\": 899\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": "{{baseUrl}}/api/vehicles/{{vehicleId}}"
+      }
+    },
+    {
+      "name": "DELETE - Remove test Honda Activa 6G",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"Remove temporary Honda Activa 6G\", function () { pm.response.to.have.status(204); });"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "DELETE",
+        "header": [],
+        "url": "{{baseUrl}}/api/vehicles/{{vehicleId}}"
+      }
+    },
+    {
+      "name": "POST - Create Ather 450X",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"Create Ather 450X\", function () { pm.response.to.have.status(201); var v = pm.response.json(); pm.expect(v.model).to.eql(\"Ather 450X\"); pm.expect(v.category).to.eql(\"Scooter\"); pm.collectionVariables.set(\"vehicleId\", v.id); });"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"model\": \"Ather 450X\",\n  \"category\": \"Scooter\",\n  \"transmission\": \"Automatic\",\n  \"seats\": 2,\n  \"pricePerDay\": 999\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": "{{baseUrl}}/api/vehicles"
+      }
+    },
+    {
+      "name": "PUT - Replace Ather 450X",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"Replace Ather 450X\", function () { pm.response.to.have.status(200); pm.expect(pm.response.json().model).to.eql(\"Ather 450X\"); pm.expect(pm.response.json().category).to.eql(\"Scooter\"); });"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "PUT",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"model\": \"Ather 450X\",\n  \"category\": \"Scooter\",\n  \"transmission\": \"Automatic\",\n  \"seats\": 2,\n  \"pricePerDay\": 1099\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": "{{baseUrl}}/api/vehicles/{{vehicleId}}"
+      }
+    },
+    {
+      "name": "PATCH - Update price for Ather 450X",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"Update price for Ather 450X\", function () { pm.response.to.have.status(200); pm.expect(pm.response.json().pricePerDay).to.eql(1199); });"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "PATCH",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"pricePerDay\": 1199\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": "{{baseUrl}}/api/vehicles/{{vehicleId}}"
+      }
+    },
+    {
+      "name": "DELETE - Remove test Ather 450X",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"Remove temporary Ather 450X\", function () { pm.response.to.have.status(204); });"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "DELETE",
+        "header": [],
+        "url": "{{baseUrl}}/api/vehicles/{{vehicleId}}"
+      }
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:3000"
+    }
+  ]
+}

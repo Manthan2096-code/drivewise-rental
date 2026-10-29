@@ -1,0 +1,5 @@
+$kind: collection
+description: CRUD practice for DriveWise vehicles. Run requests in order to create, read, replace, partially update, and delete a temporary vehicle record.
+variables:
+  baseUrl: http://localhost:3000
+  vehicleId: corolla

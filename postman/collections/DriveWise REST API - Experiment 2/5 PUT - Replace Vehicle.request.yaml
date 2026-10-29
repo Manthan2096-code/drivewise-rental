@@ -1,0 +1,16 @@
+$kind: http-request
+url: "{{baseUrl}}/api/vehicles/{{vehicleId}}"
+method: PUT
+headers:
+  Content-Type: application/json
+body:
+  type: json
+  content: |-
+    {
+      "model": "Experiment Scooter Updated",
+      "category": "Scooter",
+      "transmission": "Automatic",
+      "seats": 2,
+      "pricePerDay": 900
+    }
+order: 5000

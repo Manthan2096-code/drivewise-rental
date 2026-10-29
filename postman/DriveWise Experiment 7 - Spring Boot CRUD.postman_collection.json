@@ -1,0 +1,58 @@
+{
+  "info": {
+    "name": "DriveWise Experiment 7 - Spring Boot CRUD",
+    "description": "Run the requests in order to create, read, replace, partially update, and delete a temporary vehicle in the Spring Boot H2 database.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    { "key": "baseUrl", "value": "http://localhost:3000" },
+    { "key": "vehicleId", "value": "" }
+  ],
+  "item": [
+    {
+      "name": "1 POST - Create Vehicle",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": { "mode": "raw", "raw": "{\n  \"model\": \"Honda City\",\n  \"category\": \"Car\",\n  \"transmission\": \"Automatic\",\n  \"seats\": 5,\n  \"pricePerDay\": 2500\n}", "options": { "raw": { "language": "json" } } },
+        "url": "{{baseUrl}}/spring-api/vehicles"
+      },
+      "event": [{ "listen": "test", "script": { "type": "text/javascript", "exec": ["pm.test('Vehicle created', () => pm.response.to.have.status(201));", "pm.collectionVariables.set('vehicleId', pm.response.json().id);"] } }]
+    },
+    {
+      "name": "2 GET - All Vehicles",
+      "request": { "method": "GET", "url": "{{baseUrl}}/spring-api/vehicles" },
+      "event": [{ "listen": "test", "script": { "type": "text/javascript", "exec": ["pm.test('Vehicle list returned', () => pm.response.to.have.status(200));"] } }]
+    },
+    {
+      "name": "3 GET - Single Vehicle",
+      "request": { "method": "GET", "url": "{{baseUrl}}/spring-api/vehicles/{{vehicleId}}" },
+      "event": [{ "listen": "test", "script": { "type": "text/javascript", "exec": ["pm.test('Vehicle returned', () => pm.response.to.have.status(200));"] } }]
+    },
+    {
+      "name": "4 PUT - Replace Vehicle",
+      "request": {
+        "method": "PUT",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": { "mode": "raw", "raw": "{\n  \"model\": \"Honda City ZX\",\n  \"category\": \"Car\",\n  \"transmission\": \"Automatic\",\n  \"seats\": 5,\n  \"pricePerDay\": 2800\n}", "options": { "raw": { "language": "json" } } },
+        "url": "{{baseUrl}}/spring-api/vehicles/{{vehicleId}}"
+      },
+      "event": [{ "listen": "test", "script": { "type": "text/javascript", "exec": ["pm.test('Vehicle replaced', () => pm.response.to.have.status(200));"] } }]
+    },
+    {
+      "name": "5 PATCH - Update Price",
+      "request": {
+        "method": "PATCH",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": { "mode": "raw", "raw": "{\n  \"pricePerDay\": 2700\n}", "options": { "raw": { "language": "json" } } },
+        "url": "{{baseUrl}}/spring-api/vehicles/{{vehicleId}}"
+      },
+      "event": [{ "listen": "test", "script": { "type": "text/javascript", "exec": ["pm.test('Vehicle partially updated', () => pm.response.to.have.status(200));"] } }]
+    },
+    {
+      "name": "6 DELETE - Delete Vehicle",
+      "request": { "method": "DELETE", "url": "{{baseUrl}}/spring-api/vehicles/{{vehicleId}}" },
+      "event": [{ "listen": "test", "script": { "type": "text/javascript", "exec": ["pm.test('Vehicle deleted', () => pm.response.to.have.status(200));"] } }]
+    }
+  ]
+}
